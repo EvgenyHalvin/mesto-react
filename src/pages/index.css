@@ -2,15 +2,15 @@
 @import url(../fonts/fonts.css);
 @import url(../blocks/page/page.css);
 
+/* Липкий футер */
+@import url(../blocks/page/__wrap-for-sticky-footer/page__wrap-for-sticky-footer.css);
+
 /* Стили для header */
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
 
 /* Стили для content */
 @import url(../blocks/content/content.css);
-
-/* Липкий футер */
-@import url(../blocks/wrap-for-sticky-footer/wrap-for-sticky-footer.css);
 
 /* Стили для profile */
 @import url(../blocks/profile/profile.css);
