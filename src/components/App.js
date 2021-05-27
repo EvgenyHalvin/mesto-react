@@ -5,7 +5,7 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import PopupWithConfirm from './PopupWithConfirm';
-import PopupWithImage from './PopupWithImage';
+import ImagePopup from './ImagePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -83,7 +83,7 @@ function App() {
       } isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} />
 
       <PopupWithConfirm />
-      <PopupWithImage card={selectedCard} onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </>
   );
 }
