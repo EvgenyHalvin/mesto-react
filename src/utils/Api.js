@@ -1,6 +1,4 @@
-import {configApi} from './constants.js';
-
-class Api {
+export default class Api {
   constructor(configApi) {
     this._baseUrl = configApi.baseUrl;
     this._headers = configApi.headers;
@@ -86,6 +84,3 @@ class Api {
       .then(this._checkResponse);
   }
 }
-
-const api = new Api(configApi);
-export default api;
