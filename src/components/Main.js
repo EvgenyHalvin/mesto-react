@@ -1,23 +1,28 @@
 import React from "react";
-import api from "../utils/Api";
+import api from "../utils/api";
 import Card from "./Card";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setuserDescription] = React.useState();
-  const [userAvatar, setUserAvatar] = React.useState();
+  const {onEditAvatar,onEditProfile,onAddPlace,onCardClick} = props;
+
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
     Promise.all([api.getUserProfile(), api.getInitialCards()]).then(
-      ([data, res]) => {
-        setUserAvatar(data.avatar);
-        setUserName(data.name);
-        setuserDescription(data.about);
-        setCards(res);
+      ([userData, cardsData]) => {
+        setUserAvatar(userData.avatar);
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setCards(cardsData);
       }
-    );
-  });
+    )
+    .catch((err) => {
+      console.log(err)
+    })
+  },[]);
 
   return (
     <main className="content">
@@ -29,7 +34,7 @@ function Main(props) {
           ></div>
           <div
             className="profile__avatar-layout"
-            onClick={props.onEditAvatar}
+            onClick={onEditAvatar}
           ></div>
         </div>
         <div className="profile__profile-into">
@@ -38,7 +43,7 @@ function Main(props) {
             <button
               type="button"
               className="profile__edit-button"
-              onClick={props.onEditProfile}
+              onClick={onEditProfile}
             ></button>
           </div>
           <p className="profile__description">{userDescription}</p>
@@ -46,13 +51,13 @@ function Main(props) {
         <button
           type="button"
           className="profile__add-button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
 
       <section className="elements">
         {cards.map((item) => (
-          <Card key={item._id} card={item} onCardClick={props.onCardClick} />
+          <Card key={item._id} card={item} onCardClick={onCardClick} />
         ))}
       </section>
     </main>
