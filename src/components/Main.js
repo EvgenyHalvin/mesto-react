@@ -1,9 +1,6 @@
 import React from "react";
-import Api from "../utils/api.js";
-import {configApi} from '../utils/constants.js';
+import { api } from "../utils/api.js";
 import Card from "./Card";
-
-const api = new Api(configApi);
 
 function Main(props) {
   const {onEditAvatar,onEditProfile,onAddPlace,onCardClick} = props;

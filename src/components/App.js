@@ -124,18 +124,16 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <input
-            className="popup__field popup__field_type_link-to-img"
-            type="url"
-            id="linkAvatar-input"
-            name="link"
-            defaultValue=""
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="linkAvatar-input-error popup__field-error"></span>
-        </>
+        <input
+          className="popup__field popup__field_type_link-to-img"
+          type="url"
+          id="linkAvatar-input"
+          name="link"
+          defaultValue=""
+          placeholder="Ссылка на картинку"
+          required
+        />
+        <span className="linkAvatar-input-error popup__field-error"></span>
       </PopupWithForm>
       <PopupWithForm title="Вы уверены?" name="remove-card" buttonText="Да" />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
