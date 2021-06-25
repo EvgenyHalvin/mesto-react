@@ -4,14 +4,25 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import {CurrentUserContext} from "../contexts/CurrentUserContext.js";
+import {api} from "../utils/api.js";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
-    React.useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
-    React.useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
+  const [currentUser, setCurrentUser] = React.useState(false);
+
+  React.useEffect(() => {
+    api.getUserProfile()
+    .then((userData) => {
+      setCurrentUser(userData);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  },[])
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
@@ -37,7 +48,7 @@ function App() {
   }
 
   return (
-    <>
+    <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="page__wrap-for-sticky-footer">
           <Header />
@@ -137,7 +148,7 @@ function App() {
       </PopupWithForm>
       <PopupWithForm title="Вы уверены?" name="remove-card" buttonText="Да" />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    </>
+    </CurrentUserContext.Provider>
   );
 }
 
