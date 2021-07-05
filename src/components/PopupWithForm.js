@@ -15,15 +15,14 @@ function PopupWithForm(props) {
         ></button>
         <h3 className="popup__title">{props.title}</h3>
         <form
-          name="popupForm"
+          name={`popup-${props.name}`}
           className={`popup__form popup__form_type_${props.name}`}
           onSubmit={props.onSubmit}
-          noValidate
         >
           <fieldset className="popup__set">
             {props.children}
             <button type="submit" name="save" className="popup__submit-button">
-              Сохранить
+              {props.buttonText}
             </button>
           </fieldset>
         </form>

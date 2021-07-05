@@ -7,7 +7,7 @@ function EditAvatarPopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-  
+
     props.onUpdateAvatar({
       avatar: avatarRef.current.value,
     });
@@ -20,6 +20,7 @@ function EditAvatarPopup(props) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      buttonText="Обновить аватар"
     >
       <input
         className="popup__field popup__field_type_link-to-img"

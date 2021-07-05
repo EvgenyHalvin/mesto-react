@@ -5,7 +5,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext.js";
-import { api } from "../utils/api.js";
+import api from "../utils/api.js";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
@@ -17,7 +17,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState(null);
-  const [currentUser, setCurrentUser] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
@@ -35,15 +35,26 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
     const promise = isLiked ? api.deleteLike(card._id) : api.addLike(card._id);
 
-    promise.then((newCard) => {
-      setCards((cards) => cards.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    promise
+      .then((newCard) => {
+        setCards((cards) =>
+          cards.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      setCards((cards) => cards.filter((c) => c._id !== card._id));
-    });
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        setCards((cards) => cards.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   React.useEffect(() => {
@@ -86,12 +97,11 @@ function App() {
       .setUserProfile(newData)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
       });
-
-    closeAllPopups();
   }
 
   function handleUpdateAvatar({ avatar }) {
@@ -99,25 +109,23 @@ function App() {
       .updateAvatar(avatar)
       .then((res) => {
         setCurrentUser(res);
+        closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
       });
-
-    closeAllPopups();
   }
 
   function handleAddPlaceSubmit(newPlace) {
     api
       .getNewCard(newPlace)
       .then((res) => {
-        setCards([res, ...cards])
+        setCards([res, ...cards]);
+        closeAllPopups();
       })
       .catch((err) => {
-        console.log(err)
-      })
-
-    closeAllPopups();
+        console.log(err);
+      });
   }
 
   return (
